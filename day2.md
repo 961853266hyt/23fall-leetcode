@@ -1,6 +1,6 @@
 # Day2 错题()
 
-### 704 二分查找
+### 977
 
 ```c++
 class Solution {
@@ -28,7 +28,7 @@ public:
 };
 ```
 
-### 27 移除元素
+### 209
 
 ```c++
 class Solution {
@@ -56,7 +56,7 @@ public:
 };
 ```
 
-### 34
+### 59
 
 ```c++
 class Solution {
