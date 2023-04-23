@@ -3,52 +3,32 @@
 ### 24
 
 ```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    ListNode* removeElements(ListNode* head, int val) {
-        if (head == nullptr) {
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head -> next == nullptr) {
             return head;
         }
-        if (head -> val != val) {
-            head -> next = removeElements(head -> next, val);
-        }
-        else {
-            return removeElements(head -> next, val);
-        }
-        return head;
+        ListNode* next = head -> next;
+        ListNode* tmp = next -> next;
+        next -> next = head;
+        head -> next = swapPairs(tmp);
+        return next; 
     }
 };
 ```
 
 ### 19
-
-```c++
-class Solution {
-public:
-    int minSubArrayLen(int target, vector<int>& nums) {
-        int ans = INT_MAX;
-        int len = nums.size();
-        if (len == 1) {
-            return nums[0] >= target?1:0;
-        }
-        int l = 0, r = 0,win_sum = nums[0]; // [l,r]
-        while(r <= len - 1) {
-            while (l <= r && win_sum >= target) {
-                ans = min(ans,r - l + 1);
-                win_sum -= nums[l++];
-            }
-            while (win_sum < target) {                  // 比target小 则r右移
-                if (++r > len - 1)
-                    break;
-                win_sum += nums[r];
-            }
-        }
-        return ans == INT_MAX?0:ans;
-    }
-};
-```
-
-### 02.07
 
 ```c++
 /**
@@ -63,14 +43,52 @@ public:
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
-        if (head == nullptr || head -> next == nullptr) {
-            return head;
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* slow = dummy;
+        ListNode* fast = dummy;
+        while(n--!=0) {
+            fast = fast -> next;
         }
-        ListNode* a = reverseList(head -> next);
-        head -> next -> next = head;
-        head -> next = nullptr;
-        return a;
+        while(fast -> next != nullptr) {
+            fast = fast -> next;
+            slow = slow -> next;
+        }
+        slow -> next = slow -> next -> next;
+        return dummy -> next;
+    }
+};
+```
+
+### 02.07
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        set<ListNode*> s;
+        if (headA == nullptr || headB == nullptr) {
+            return nullptr;
+        }
+        while(headA != nullptr) {
+            s.insert(headA);
+            headA = headA -> next;
+        }
+        while(headB != nullptr) {
+            if (s.count(headB)) {
+                return headB;
+            }
+            headB = headB -> next;
+        }
+        return nullptr;
     }
 };
 ```
@@ -78,7 +96,20 @@ public:
 ### 142
 
 ```c++
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        
+    }
+};
 ```
 
 
