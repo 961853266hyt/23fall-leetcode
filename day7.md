@@ -71,7 +71,6 @@ public:
 ### 1
 
 ```c++
-/* space: O(n) time:O(n) */
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
