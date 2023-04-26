@@ -1,4 +1,4 @@
-# Day8 错题(替换空格)
+# Day8 错题(替换空格、151)
 
 ### 344
 
@@ -64,8 +64,35 @@ public:
 ### 151
 
 ```c++
-/*time: O(n^3) space:O(logn) */
+/*time: O(n) space:O(1) */
+class Solution {
+public:
+    void removeExtraSpaces(string& s) {
+        int slow = 0;   
+        for (int i = 0; i < s.size(); i++) { 
+            if (s[i] != ' ') {                        //遇到非空格就处理，即删除所有空格。
+                if (slow != 0) s[slow++] = ' ';       //手动控制空格，给单词之间添加空格。slow != 0说明不是第一个单词，需要在单词前添加空格。
+                while (i < s.size() && s[i] != ' ') { //补上该单词，遇到空格说明单词结束。
+                    s[slow++] = s[i++];
+                }
+            }
+        }
+        s.resize(slow); 
+    }
 
+    string reverseWords(string s) {
+        removeExtraSpaces(s); 
+        reverse(s.begin(), s.end());
+        int start = 0; //单词的开始下标start
+        for (int i = 0; i <= s.size(); i++) {
+            if (i == s.size() || s[i] == ' ') { //到达空格或者串尾，说明一个单词结束
+                reverse(s.begin() + start,s.begin() + i);
+                start = i + 1; 
+            }
+        }
+        return s;
+    }
+};
 ```
 
   ### 剑指Offer58-II.左旋转字符串
