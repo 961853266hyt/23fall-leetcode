@@ -70,7 +70,3 @@ public:
 
 
 
-Deque:  3 2 1
-
-Ans: 3 3
-
