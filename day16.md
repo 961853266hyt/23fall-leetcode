@@ -55,16 +55,30 @@ public:
 ### 222
 
 ```c++
-/*time: O(n) space:O(height) */
+/*time: O(logn * logn) space:O(1) */
 class Solution {
 public:
-    int countNodes(TreeNode* root) {
-        if (root == nullptr) {
-            return 0;
+    // count depth
+    int countLevels(TreeNode* root) {
+        int levels = 0;
+        while (root) {
+            root = root->left; 
+            levels += 1;
         }
-        return 1 + countNodes(root->left) + countNodes(root->right);
+        return levels;
+    }
+    int countNodes(TreeNode* root){
+        if(root == nullptr) return 0;
+        int left_levels = countLevels(root->left);
+        int right_levels = countLevels(root->right);
+        if(left_levels == right_levels){ // 左子树是满二叉树的情况
+            return countNodes(root->right) + (1<<left_levels);
+        }else{
+            return countNodes(root->left) + (1<<right_levels);
+        }
     }
 };
+
 ```
 
 
