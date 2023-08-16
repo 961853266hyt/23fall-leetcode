@@ -1,39 +1,40 @@
-# Day20 错题()
+# Day20 错题(236 501)
 
-### 654
+### 530
 
 ```c++
 /*time: O(n) space: O(height) */
 class Solution {
 public:
-    vector<int> nums;
-    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-        this -> nums = nums;
-        return help(0, nums.size());
+    int min_diff = INT_MAX;
+    int pre_val = -1;
+    int getMinimumDifference(TreeNode* root) {
+        help(root);
+        return min_diff;
     }
 
-    TreeNode* help(int i, int j) { // [i,j)
-        if (j <= i) {
-            return nullptr;
+    void help(TreeNode* root) {
+         if (!root) {
+            return;
         }
-        TreeNode* root = new TreeNode();
-        int m_index = i;
-        int max_val = nums[i];
-        for(int k = i ; k < j;k++) {
-            if (max_val < nums[k]) {
-                m_index = k;
-                max_val = nums[k];
-            }
+        int val = root -> val;
+        cout<<val<<endl;
+        help(root -> left);
+        if (pre_val == -1) 
+        {
+            pre_val = val;
+        } 
+        else 
+        {
+        min_diff = min(abs(pre_val - val), min_diff);
         }
-        root -> val = max_val;
-        root -> left = help(i, m_index);
-        root -> right = help(m_index+1, j);
-        return root;
+        pre_val = val;
+        help(root -> right); 
     }
 };
 ```
 
-### 617
+### 501
 
 ```c++
 /*time: O(n) space:O(height) */
@@ -64,51 +65,29 @@ public:
 };
 ```
 
-### 700
+### 236
 
 ```c++
-/*time: O(n) space:O(height) */
+/*time: O(n) space:O(n) */
 class Solution {
 public:
-    TreeNode* searchBST(TreeNode* root, int val) {
-        if (root -> val == val) {
+    // 如果 ppp 和 qqq 都存在，则返回它们的公共祖先；
+    // 如果只存在一个，则返回存在的一个；
+    // 如果 ppp 和 qqq 都不存在，则返回 NULL
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root == nullptr | root == p || root == q){
             return root;
         }
-        if (root -> val < val) {
-            if (root -> right == nullptr) 
-                return nullptr;
-            return searchBST(root -> right, val);
+        auto left = lowestCommonAncestor(root -> left, p , q);
+        auto right = lowestCommonAncestor(root -> right, p , q);
+        if (left && right) {
+            return root;
         }
-        if (root -> val > val) {
-            if (root -> left == nullptr) 
-                return nullptr;
-            return searchBST(root -> left, val);
+        if (left) {
+            return left;
         }
-        return nullptr;
+        return right;
     }
-};
-```
-
-### 98
-
-```c++
-/*time: O(n) space:O(height) */
-class Solution {
-public:
-    long long max_val = LONG_MIN;
-    bool isValidBST(TreeNode* root) {
-        if (!root)
-            return true; 
-        bool left_ans = isValidBST(root -> left);
-        if (root -> val > max_val) {
-            max_val = root -> val;
-        }
-        else {
-            return false;
-        }
-        bool right_ans = isValidBST(root -> right);
-        return left_ans && right_ans;
-    } 
 };
 ```
 
